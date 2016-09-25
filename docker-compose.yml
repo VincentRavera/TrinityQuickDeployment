@@ -1,16 +1,22 @@
 version: '2'
+volumes:
+  data: {}
 services:
   maven:
     build: ./maven
+    hostname: maven
     volumes: 
-      - data:/volume
+      - data:/mnt/
   tomcat:
-    image: tomcat:latest
+    build: ./tomcat
     hostname: tomcat
     volumes: 
-      - data:/volume
-    links:
+      - data:/mnt/
+    expose:
+      - "80"
+    ports:
       - "8888:8080"
+    links:
       - mysql
   mysql:
     image: mysql/mysql-server
@@ -22,5 +28,3 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
       - MYSQL_ROOT_PASSWORD=root
-volumes:
-  data: {}
