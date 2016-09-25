@@ -2,12 +2,25 @@ version: '2'
 services:
   maven:
     build: ./maven
+    volumes: 
+      - data:/volume
   tomcat:
     image: tomcat:latest
+    hostname: tomcat
+    volumes: 
+      - data:/volume
+    links:
+      - "8888:8080"
+      - mysql
   mysql:
     image: mysql/mysql-server
+    hostname: mysql
+    ports:
+      - "3306:3306"
     environment:
       - MYSQL_DATABASE=mangashare
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
       - MYSQL_ROOT_PASSWORD=root
+volumes:
+  data: {}
