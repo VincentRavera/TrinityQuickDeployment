@@ -1,14 +1,13 @@
-FROM maven:3.2-jdk-7-onbuild
+FROM maven:latest
 
 MAINTAINER Vincent RAVERA <ravera.vincent@gmail.com>
 
 
-RUN git clone https://github.com/VincentRavera/MangaShare /home/root/Application
+RUN git clone https://github.com/VincentRavera/MangaShare /usr/src/app
 
-
-WORKDIR /home/root/Application
+WORKDIR /usr/src/app
 
 RUN mvn clean install
 
 RUN cp target/*.war /volume/
-
+CMD clean install
